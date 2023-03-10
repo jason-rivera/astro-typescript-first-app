@@ -1,4 +1,12 @@
 ---
+import Layout from '../layouts/Layout.astro';
+import Showcase from '../components/Showcase.astro';
 ---
 
-<h1>Hello world</h1>
+<Layout title='Home'>
+  <Showcase
+    heading='Welcome to the website!'
+    description='Make yourself at home'
+  />
+  <h1>Hello world</h1>
+</Layout>
