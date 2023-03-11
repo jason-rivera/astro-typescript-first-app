@@ -1,0 +1,37 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+export const getStaticPaths = async () => {
+  const allBlogPosts = await Astro.glob('/src/blog-posts/*.md');
+
+  return allBlogPosts.map((post) => ({
+    params: {
+      slug: post.frontmatter.slug,
+    },
+    props: {
+      post,
+    },
+  }));
+};
+
+const { Content, frontmatter } = Astro.props.post;
+---
+
+<Layout title='sluggggg'>
+  <h1>{frontmatter.title}</h1>
+  <p></p>
+  <p>
+    Written by <strong>{frontmatter.author}</strong> on {
+      new Date(frontmatter.date).toLocaleDateString()
+    }
+  </p>
+  <p class='content'>
+    <Content class='asdf' />
+  </p>
+</Layout>
+
+<style>
+  .asdf {
+    padding: 30px;
+  }
+</style>

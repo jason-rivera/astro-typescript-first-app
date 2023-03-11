@@ -11,4 +11,10 @@
 body {
   background: rgb(14, 48, 22);
   font-family: Roboto, sans-serif, Arial, Helvetica, sans-serif;
+  color: white;
+}
+
+.btn {
+  background: white;
+  padding: 10px;
 }

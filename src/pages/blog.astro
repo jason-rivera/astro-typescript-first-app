@@ -1,0 +1,31 @@
+---
+import Layout from '../layouts/Layout.astro';
+import BlogCard from '../components/BlogCard.astro';
+
+const posts = await Astro.glob('/src/blog-posts/*.md');
+---
+
+<Layout title='Blog'>
+  <div class='container'>
+    {
+      posts.map((post) => (
+        <>
+          <BlogCard
+            title={post.frontmatter.title}
+            slug={post.frontmatter.slug}
+            excerpt={post.frontmatter.excerpt}
+            author={post.frontmatter.author}
+            date={post.frontmatter.date}
+          />
+        </>
+      ))
+    }
+  </div>
+</Layout>
+
+<style>
+  .container {
+    display: flex;
+    flex-wrap: wrap;
+  }
+</style>
