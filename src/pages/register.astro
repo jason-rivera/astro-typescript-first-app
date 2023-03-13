@@ -1,0 +1,25 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title='Register'>
+  <h1>Registration Page</h1>
+
+  <input type='email' placeholder='Email' />
+  <input type='password' placeholder='Password' />
+
+  <button id='reg-btn'>Register</button>
+</Layout>
+
+<script>
+  import axios from 'axios';
+
+  const register = async () => {
+    const response = await axios.get('http://localhost:8000/ping');
+    console.log(response);
+  };
+
+  document.getElementById('reg-btn')!.addEventListener('click', () => {
+    register();
+  });
+</script>
