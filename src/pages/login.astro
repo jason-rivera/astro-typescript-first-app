@@ -1,0 +1,54 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title='Login'>
+  <h1>login</h1>
+  <form>
+    <input id='email-input' type='text' name='email' placeholder='email' />
+    <input
+      id='password-input'
+      type='password'
+      name='password'
+      placeholder='password'
+    />
+    <button id='login-btn' type='submit'>login</button>
+  </form>
+  <div id='error-msg'></div>
+</Layout>
+
+<script>
+  import axios from 'axios';
+
+  const errorMsg = document.querySelector('#error-msg') as HTMLDivElement;
+
+  const emailInput = document.querySelector('#email-input') as HTMLInputElement;
+  const passwordInput = document.querySelector(
+    '#password-input'
+  ) as HTMLInputElement;
+
+  const loginBtn = document.querySelector('#login-btn') as HTMLButtonElement;
+
+  const handleLogin = async (e: MouseEvent) => {
+    e.preventDefault();
+
+    const email = emailInput.value;
+    const password = passwordInput.value;
+    const response = await axios.post('http://localhost:8000/login', {
+      email: email,
+      password: password,
+    });
+
+    console.log(response.data);
+
+    if (response.data.message === 'GOOD') {
+      window.location.href = '/';
+    } else {
+      errorMsg!.innerHTML = 'Incorrect email or password';
+    }
+  };
+
+  loginBtn.addEventListener('click', (e) => {
+    handleLogin(e);
+  });
+</script>

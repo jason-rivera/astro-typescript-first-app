@@ -26,9 +26,12 @@ import Layout from '../layouts/Layout.astro';
   <script>
     import axios from 'axios';
 
+    const errorMsg = document.getElementById('error-msg');
+
     const register = async (e: any) => {
       e.preventDefault();
-      const errorMsg = document.getElementById('error-msg');
+
+      errorMsg!.innerHTML = '';
 
       const emailInput = document.querySelector<HTMLInputElement>(
         '#email-input'
@@ -56,12 +59,6 @@ import Layout from '../layouts/Layout.astro';
           'Please fill in all fields';
         return;
       }
-
-      console.log(
-        'got here',
-        passwordInput?.value,
-        confirmPasswordInput?.value
-      );
 
       if (passwordInput!.value !== confirmPasswordInput!.value) {
         errorMsg!.innerHTML = 'Passwords do not match';
