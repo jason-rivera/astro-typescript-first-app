@@ -5,45 +5,93 @@ import Layout from '../layouts/Layout.astro';
 <Layout title='Register'>
   <h1>Registration Page</h1>
 
-  <input id='email-input' type='email' placeholder='Email' />
-  <input id='password-input' type='password' placeholder='Password' />
-
-  <button id='reg-btn'>Register</button>
+  <form>
+    <input id='email-input' type='email' placeholder='Email' />
+    <input id='password-input' type='password' placeholder='Password' />
+    <input
+      id='confirm-password-input'
+      type='password'
+      placeholder='Confirm Password'
+    />
+    <button id='reg-btn'>Register</button>
+  </form>
   <div id='error-msg'></div>
-</Layout>
 
-<style>
-  #error-msg {
-    color: red;
-  }
-</style>
-
-<script>
-  import axios from 'axios';
-
-  const register = async () => {
-    document.getElementById('error-msg')!.innerHTML = '';
-
-    const email =
-      document.querySelector<HTMLInputElement>('#email-input')!.value;
-    const password =
-      document.querySelector<HTMLInputElement>('#password-input')!.value;
-
-    if (!email || !password) {
-      document.getElementById('error-msg')!.innerHTML =
-        'Please fill out all fields';
-      return;
+  <style>
+    #error-msg {
+      color: red;
     }
+  </style>
 
-    const response = await axios.post('http://localhost:8000/register', {
-      email: email,
-      password: password,
+  <script>
+    import axios from 'axios';
+
+    const register = async (e: any) => {
+      e.preventDefault();
+      const errorMsg = document.getElementById('error-msg');
+
+      const emailInput = document.querySelector<HTMLInputElement>(
+        '#email-input'
+      ) as HTMLInputElement;
+      const passwordInput = document.querySelector<HTMLInputElement>(
+        '#password-input'
+      ) as HTMLInputElement;
+
+      const confirmPasswordInput = document.querySelector<HTMLInputElement>(
+        '#confirm-password-input'
+      ) as HTMLInputElement;
+
+      console.log(
+        emailInput?.value,
+        passwordInput?.value,
+        confirmPasswordInput?.value
+      );
+
+      if (
+        !emailInput?.value ||
+        !passwordInput?.value ||
+        !confirmPasswordInput?.value
+      ) {
+        document.getElementById('error-msg')!.innerHTML =
+          'Please fill in all fields';
+        return;
+      }
+
+      console.log(
+        'got here',
+        passwordInput?.value,
+        confirmPasswordInput?.value
+      );
+
+      if (passwordInput!.value !== confirmPasswordInput!.value) {
+        errorMsg!.innerHTML = 'Passwords do not match';
+        return;
+      }
+
+      try {
+        const response = await axios.post('http://localhost:8000/register', {
+          email: emailInput!.value,
+          password: passwordInput!.value,
+        });
+        console.log(response);
+        console.log(response.data);
+
+        if (response.status === 200) {
+          window.location.href = '/';
+        } else {
+          errorMsg!.innerHTML =
+            'Something went wrong. Please refresh the page and try again';
+        }
+      } catch (e: any) {
+        console.error(e.message);
+      }
+    };
+
+    const reg = document.getElementById('reg-btn');
+
+    reg!.addEventListener('click', (e: MouseEvent) => {
+      console.log('clicked');
+      register(e);
     });
-
-    console.log(response.data);
-  };
-
-  document.getElementById('reg-btn')!.addEventListener('click', () => {
-    register();
-  });
-</script>
+  </script>
+</Layout>
