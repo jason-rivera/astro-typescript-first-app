@@ -5,18 +5,42 @@ import Layout from '../layouts/Layout.astro';
 <Layout title='Register'>
   <h1>Registration Page</h1>
 
-  <input type='email' placeholder='Email' />
-  <input type='password' placeholder='Password' />
+  <input id='email-input' type='email' placeholder='Email' />
+  <input id='password-input' type='password' placeholder='Password' />
 
   <button id='reg-btn'>Register</button>
+  <div id='error-msg'></div>
 </Layout>
+
+<style>
+  #error-msg {
+    color: red;
+  }
+</style>
 
 <script>
   import axios from 'axios';
 
   const register = async () => {
-    const response = await axios.get('http://localhost:8000/ping');
-    console.log(response);
+    document.getElementById('error-msg')!.innerHTML = '';
+
+    const email =
+      document.querySelector<HTMLInputElement>('#email-input')!.value;
+    const password =
+      document.querySelector<HTMLInputElement>('#password-input')!.value;
+
+    if (!email || !password) {
+      document.getElementById('error-msg')!.innerHTML =
+        'Please fill out all fields';
+      return;
+    }
+
+    const response = await axios.post('http://localhost:8000/register', {
+      email: email,
+      password: password,
+    });
+
+    console.log(response.data);
   };
 
   document.getElementById('reg-btn')!.addEventListener('click', () => {
