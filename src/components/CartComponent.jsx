@@ -9,7 +9,6 @@ const CartComponent = () => {
   return (
     <div>
       {/* <AbcIcon client:load /> */}
-
       {items.map((item) => (
         <p>- {item}</p>
       ))}
