@@ -1,3 +1,3 @@
 import { atom } from 'nanostores';
 
-export const isUserLoggedIn = atom(true);
+export const isUserLoggedIn = atom(false);

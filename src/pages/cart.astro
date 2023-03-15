@@ -1,0 +1,9 @@
+---
+import Layout from '../layouts/Layout.astro';
+import CartComponent from '../components/CartComponent';
+---
+
+<Layout title='Cart'>
+  <h1>Cawrt</h1>
+  <CartComponent client:only='react' />
+</Layout>

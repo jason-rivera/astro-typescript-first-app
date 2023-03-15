@@ -6,7 +6,7 @@ const Header2 = () => {
 
   return (
     <nav>
-      <div class='links'>
+      {/* <div class='links'>
         <a href='/'>Home</a>
         <a href='/about'>About</a>
         <a href='/blog'>Blog</a>
@@ -20,7 +20,7 @@ const Header2 = () => {
             <a href='/register'>Register</a>
           </>
         )}
-      </div>
+      </div> */}
     </nav>
   );
 };

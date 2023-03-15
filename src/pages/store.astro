@@ -1,0 +1,22 @@
+---
+import Layout from '../layouts/Layout.astro';
+import StoreCard from '../components/StoreCard';
+---
+
+<Layout title='Store'>
+  <h1>Store</h1>
+  <div class='container'>
+    <StoreCard client:load itemName='Juice' />
+    <StoreCard client:load itemName='Milk' />
+    <StoreCard client:load itemName='Water' />
+    <StoreCard client:load itemName='Pop' />
+  </div>
+</Layout>
+
+<style>
+  .container {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+</style>
